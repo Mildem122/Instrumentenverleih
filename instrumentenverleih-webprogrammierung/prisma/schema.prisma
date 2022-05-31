@@ -1,0 +1,27 @@
+// schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Instrument {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  borrowed  Boolean  @default(false)
+  authorId  String?
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+}
