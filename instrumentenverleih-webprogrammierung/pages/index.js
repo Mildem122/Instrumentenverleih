@@ -9,7 +9,7 @@ export default function Home({ results }) {
     <div>
       <Head>
         <title>Instrumentenverleih</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <Header />
       <Nav />

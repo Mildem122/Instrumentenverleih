@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   let userId = req.query.userId;
   switch (req.method) {
     case "GET":
-      data = await prisma.instrument.findUnique({
+      data = await prisma.user.findUnique({
         where: {
           id: userId,
         },
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     case "PUT":
       //Update;
       data = req.body;
-      data = await prisma.instrument.update({
+      data = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       });
       break;
     case "DELETE":
-      data = await prisma.instrument.delete({
+      data = await prisma.user.delete({
         where: {
           id: userId,
         },

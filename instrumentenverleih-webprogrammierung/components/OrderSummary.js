@@ -4,14 +4,7 @@ import {
   UserCircleIcon,
   CashIcon,
 } from "@heroicons/react/outline";
-const user = {
-  id: "cl3yop4fg0037r4jv6cs12aoe",
-  userName: "Mildem",
-  password: "123",
-  name: "Marcel Mildenberger",
-  email: "marcel.milde@outlook.de",
-  adress: "Rottfeldstraße 10",
-};
+import { useSession } from "next-auth/react";
 
 function OrderSummary({
   device,
@@ -20,6 +13,7 @@ function OrderSummary({
   setOrderStep,
   setFinishedOrder,
 }) {
+  const { data: session } = useSession();
   const daysBetweenDate = (dateOne, dateTwo) => {
     const date1 = new Date(dateOne);
     const date2 = new Date(dateTwo);
@@ -68,7 +62,7 @@ function OrderSummary({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: `${user.id}`,
+        userId: `${session.user.id}`,
         deviceId: `${device.id}`,
         borrowedFrom: `${dateFrom}`,
         borrowedUntil: `${dateTo}`,
@@ -122,15 +116,17 @@ function OrderSummary({
       </div>
       <div className="flex flex-row mb-2">
         <h2 className="text-xl mr-3 ">Name:</h2>
-        <h2 className="text-xl self-center text-white">{user.name}</h2>
+        <h2 className="text-xl self-center text-white">{session.user.name}</h2>
       </div>
       <div className="flex flex-row mb-2">
         <h2 className="text-xl mr-3 ">Email:</h2>
-        <h2 className="text-xl self-center text-white">{user.email}</h2>
+        <h2 className="text-xl self-center text-white">{session.user.email}</h2>
       </div>
       <div className="flex flex-row mb-2">
         <h2 className="text-xl mr-3 ">Adresse:</h2>
-        <h2 className="text-xl self-center text-white">{user.adress}</h2>
+        <h2 className="text-xl self-center text-white">
+          {session.user.adress}
+        </h2>
       </div>
       <div className="flex flex-row self-center my-10">
         <CashIcon className="w-8" />

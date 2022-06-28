@@ -20,7 +20,7 @@ const Thumbnail = forwardRef(({ result }, ref) => {
           <h2 className="mt-1 text-2xl text-white transition-all duration-100 ease-in-out group-hover:font-bold">
             {result.name}
           </h2>
-          <p className="flex items-center opacity-0 group-hover:opacity-100">
+          <p className="flex items-center opacity-0  group-hover:opacity-100">
             {result.description}
           </p>
         </div>

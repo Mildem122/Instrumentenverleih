@@ -1,8 +1,10 @@
 import CustomButton from "./CustomButton";
 import { useRouter } from "next/router";
+import { useSession, signIn } from "next-auth/react";
 
 function Device({ selectedDevice }) {
   const router = useRouter();
+  const { data: session } = useSession();
   const onButtonClick = async () => {
     router.push(`http://localhost:3000/order/${selectedDevice.id}`);
   };
@@ -52,10 +54,17 @@ function Device({ selectedDevice }) {
           )}
         </div>
         {selectedDevice.isAvailable ? (
-          <CustomButton
-            buttonText="Jetzt Mieten!"
-            buttonFunction={onButtonClick}
-          />
+          session ? (
+            <CustomButton
+              buttonText="Jetzt Mieten!"
+              buttonFunction={onButtonClick}
+            />
+          ) : (
+            <CustomButton
+              buttonText="Bitte Loggen Sie sich ein, um forzufahren!"
+              buttonFunction={signIn}
+            />
+          )
         ) : null}
       </div>
     </div>
