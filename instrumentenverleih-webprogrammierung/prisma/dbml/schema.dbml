@@ -1,0 +1,121 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Instrument {
+  id String [pk]
+  name String [not null]
+  playingTechnique PlayingTechnique [not null]
+  pictureURL String [not null]
+  description String [not null]
+  playingTechniqueId String [not null]
+  Devices Device [not null]
+}
+
+Table Device {
+  id String [pk]
+  pictureUrl String [not null]
+  description String [not null]
+  modelName String [not null]
+  instrumentId String [not null]
+  price String [not null]
+  size String
+  fingering String
+  isAvailable Boolean [not null, default: false]
+  instrumentType Instrument [not null]
+  availableDevices Int
+  Orders Order [not null]
+  manufacturer Manufacturer
+  manufacturerId String
+  tone String
+}
+
+Table PlayingTechnique {
+  id String [pk]
+  playingTechniqueText String [not null]
+  listedInstruments Instrument [not null]
+}
+
+Table Manufacturer {
+  id String [pk]
+  name String [not null]
+  country String [not null]
+  Device Device [not null]
+}
+
+Table Order {
+  user User [not null]
+  device Device [not null]
+  deviceId String [not null]
+  borrowedFrom String [not null]
+  borrowedUntil String [not null]
+  orderDate DateTime [default: `now()`, not null]
+  price String
+  paymentMethod String
+  orderId String [pk]
+  userId String [not null]
+}
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  adress String
+  accounts Account [not null]
+  sessions Session [not null]
+  Order Order [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Ref: Instrument.playingTechniqueId > PlayingTechnique.id
+
+Ref: Device.instrumentId > Instrument.id
+
+Ref: Device.manufacturerId > Manufacturer.id
+
+Ref: Order.userId > User.id
+
+Ref: Order.deviceId > Device.id
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]
