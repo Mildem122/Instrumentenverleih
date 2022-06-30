@@ -32,3 +32,7 @@ https://tailwindcss.com/docs/guides/nextjs
 
 Icons
 https://heroicons.com/
+
+NextAuth
+
+
