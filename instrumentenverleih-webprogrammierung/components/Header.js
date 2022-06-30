@@ -19,16 +19,20 @@ function Header() {
           Icon={QuestionMarkCircleIcon}
           url="/instrument/test"
         />
+        {!session ? (
+          <HeaderItem title="ACCOUNT" Icon={UserIcon} url="/api/auth/signin" />
+        ) : null}
         {session?.user?.image ? (
           <GoogleProfile
             title="ACCOUNT"
             url="/user/profile"
             pictureUrl={`${session.user.image}`}
           />
-        ) : (
-          <HeaderItem title="ACCOUNT" Icon={UserIcon} url="/api/auth/signin" />
-        )}
-        {session?.user?.image ? (
+        ) : null}
+        {!session?.user?.image && session ? (
+          <HeaderItem title="ACCOUNT" url="/user/profile" Icon={UserIcon} />
+        ) : null}
+        {session ? (
           <HeaderItem
             title="AUSLOGGEN"
             Icon={LogoutIcon}

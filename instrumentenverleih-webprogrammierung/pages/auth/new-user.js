@@ -11,12 +11,16 @@ function NewUser() {
   const [city, setCity] = useState("");
   const [plz, setPlz] = useState("");
   const [checked, setChecked] = useState(false);
+  const [name, setName] = useState(null);
   const router = useRouter();
   const buttonFunction = async () => {
     const userData = await fetch(
       `http://localhost:3000/api/user/${session.user.id}`
     ).then((res) => res.json());
     userData.adress = `${street} ${number}, ${plz} ${city}`;
+    if (!session?.user?.name) {
+      userData.name = name;
+    }
     //update User
     const updatedUser = await fetch(
       `http://localhost:3000/api/user/${userData.id}`,
@@ -39,6 +43,26 @@ function NewUser() {
           Bitte vervollständigen Sie folgende Informationen
         </h2>
         <form class="w-full max-w-sm self-center">
+          {session?.user?.name ? null : (
+            <div class="md:flex md:items-center mb-6">
+              <div class="md:w-1/3">
+                <label
+                  class="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
+                  for="inline-full-name"
+                >
+                  Name
+                </label>
+              </div>
+              <div class="md:w-2/3">
+                <input
+                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                  id="inline-full-name"
+                  type="text"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
               <label
