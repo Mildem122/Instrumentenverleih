@@ -26,10 +26,12 @@ function SuccessfulOrder({ finishedOrder }) {
         unserem Standort, sobald ihr Mietzeitraum beginnt, abholen.
       </h2>
 
-      <CustomButton
-        buttonText="Zurück zur Startseite!"
-        buttonFunction={buttonFunction}
-      />
+      <div className="self-center w-96">
+        <CustomButton
+          buttonText="Zurück zur Startseite!"
+          buttonFunction={buttonFunction}
+        />
+      </div>
     </div>
   );
 }

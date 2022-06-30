@@ -32,11 +32,11 @@ function RequiredInformation({
 
   return (
     <div className="flex flex-col">
-      <h2 className="self-center text-2xl font-medium text-white mb-2 text-center">
+      <h2 className=" text-2xl font-medium text-white mb-2 text-center">
         Ihr gewünschter Mietzeitraum für {device.modelName}!
       </h2>
-      <div className="flex flex-row my-5">
-        <h2 className="text-2xl mr-5 text-white">Von:</h2>
+      <div className="flex flex-row self-center my-5 ">
+        <h2 className="text-2xl mr-5 text-white self-center">Von:</h2>
         <input
           className="rounded-xl text-black"
           type="date"
@@ -44,7 +44,7 @@ function RequiredInformation({
           onChange={(e) => setDateFrom(e.target.value)}
         />
         {dateFrom ? (
-          <>
+          <div className="flex flex-row self-center ">
             <h2 className="text-2xl mx-5 text-white">Bis:</h2>
             <input
               className="rounded-xl text-black  "
@@ -52,11 +52,16 @@ function RequiredInformation({
               onChange={(e) => setDateTo(e.target.value)}
               min={minDate}
             />
-          </>
+          </div>
         ) : null}
       </div>
       {dateFrom && dateTo ? (
-        <CustomButton buttonText="Bestätigen" buttonFunction={buttonFunction} />
+        <div className="max-w-xl self-center">
+          <CustomButton
+            buttonText="Bestätigen"
+            buttonFunction={buttonFunction}
+          />
+        </div>
       ) : null}
     </div>
   );

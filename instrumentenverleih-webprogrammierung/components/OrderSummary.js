@@ -5,6 +5,8 @@ import {
   CashIcon,
 } from "@heroicons/react/outline";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+import ThreeRadioButton from "./ThreeRadioButtons";
 
 function OrderSummary({
   device,
@@ -14,6 +16,8 @@ function OrderSummary({
   setFinishedOrder,
 }) {
   const { data: session } = useSession();
+  const [checked, setChecked] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
   const daysBetweenDate = (dateOne, dateTwo) => {
     const date1 = new Date(dateOne);
     const date2 = new Date(dateTwo);
@@ -67,6 +71,11 @@ function OrderSummary({
         borrowedFrom: `${dateFrom}`,
         borrowedUntil: `${dateTo}`,
         orderId: `#${makeid(15)}`,
+        price: calculatePrice(
+          daysBetweenDate(dateFrom, dateTo),
+          device.price / 30
+        ),
+        paymentMethod: `${selectedValue}`,
       }),
     }).then((response) => response.json());
     setFinishedOrder(newOrder);
@@ -81,27 +90,29 @@ function OrderSummary({
           Warenkorb
         </h2>
       </div>
-      <div className="flex flex-row mb-2">
-        <h2 className="text-xl mr-3 ">Instrument:</h2>
-        <h2 className="text-xl self-center text-white">{device.modelName}</h2>
+      <div className="flex flex-col">
+        <div className="flex flex-row mb-2 self-center">
+          <h2 className="text-xl mr-3 ">Instrument:</h2>
+          <h2 className="text-xl self-center text-white">{device.modelName}</h2>
+        </div>
+        <div className="flex flex-row mb-2 self-center">
+          <h2 className="text-xl mr-3 ">Zeitraum:</h2>
+          <h2 className="text-xl self-center text-white">
+            {new Date(dateFrom).toLocaleString("de-DE", {
+              year: "2-digit",
+              month: "2-digit",
+              day: "2-digit",
+            })}{" "}
+            -{" "}
+            {new Date(dateTo).toLocaleString("de-DE", {
+              year: "2-digit",
+              month: "2-digit",
+              day: "2-digit",
+            })}
+          </h2>
+        </div>
       </div>
-      <div className="flex flex-row mb-2">
-        <h2 className="text-xl mr-3 ">Zeitraum:</h2>
-        <h2 className="text-xl self-center text-white">
-          {new Date(dateFrom).toLocaleString("de-DE", {
-            year: "2-digit",
-            month: "2-digit",
-            day: "2-digit",
-          })}{" "}
-          -{" "}
-          {new Date(dateTo).toLocaleString("de-DE", {
-            year: "2-digit",
-            month: "2-digit",
-            day: "2-digit",
-          })}
-        </h2>
-      </div>
-      <div className="flex flex-row mb-2">
+      <div className="flex flex-row mb-2 self-center">
         <h2 className="text-xl mr-3 ">Preis:</h2>
         <h2 className="text-xl self-center text-white">
           {calculatePrice(daysBetweenDate(dateFrom, dateTo), device.price / 30)}
@@ -114,19 +125,25 @@ function OrderSummary({
           Accountinformationen
         </h2>
       </div>
-      <div className="flex flex-row mb-2">
-        <h2 className="text-xl mr-3 ">Name:</h2>
-        <h2 className="text-xl self-center text-white">{session.user.name}</h2>
-      </div>
-      <div className="flex flex-row mb-2">
-        <h2 className="text-xl mr-3 ">Email:</h2>
-        <h2 className="text-xl self-center text-white">{session.user.email}</h2>
-      </div>
-      <div className="flex flex-row mb-2">
-        <h2 className="text-xl mr-3 ">Adresse:</h2>
-        <h2 className="text-xl self-center text-white">
-          {session.user.adress}
-        </h2>
+      <div className="flex flex-col">
+        <div className="flex flex-row mb-2 self-center">
+          <h2 className="text-xl mr-3 ">Name:</h2>
+          <h2 className="text-xl self-center text-white">
+            {session.user.name}
+          </h2>
+        </div>
+        <div className="flex flex-row mb-2 self-center">
+          <h2 className="text-xl mr-3 ">Email:</h2>
+          <h2 className="text-xl self-center text-white">
+            {session.user.email}
+          </h2>
+        </div>
+        <div className="flex flex-row mb-2 self-center">
+          <h2 className="text-xl mr-3 ">Adresse:</h2>
+          <h2 className="text-xl self-center text-white">
+            {session.user.adress}
+          </h2>
+        </div>
       </div>
       <div className="flex flex-row self-center my-10">
         <CashIcon className="w-8" />
@@ -134,56 +151,35 @@ function OrderSummary({
           Bezahlmethode
         </h2>
       </div>
-      <div>
-        <div class="form-check mb-3">
-          <input
-            class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-          />
-          <label
-            class="form-check-label inline-block text-white"
-            for="flexRadioDefault1"
-          >
-            Paypal
-          </label>
-        </div>
-        <div class="form-check mb-3">
-          <input
-            class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            checked
-          />
-          <label
-            class="form-check-label inline-block text-white"
-            for="flexRadioDefault2"
-          >
-            Klarna
-          </label>
-        </div>
-        <div class="form-check mb-3">
-          <input
-            class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault3"
-            checked
-          />
-          <label
-            class="form-check-label inline-block text-white"
-            for="flexRadioDefault3"
-          >
-            Kreditkarte
-          </label>
-        </div>
-      </div>
-      <CustomButton
-        buttonText="Jetzt Zahlungspflichtig bestellen"
-        buttonFunction={buttonFunction}
+
+      <ThreeRadioButton
+        textOne="Paypal"
+        textTwo="Klarna"
+        textThree="Kreditkarte"
+        valueOne="Paypal"
+        valueTwo="Klarna"
+        valueThree="Kreditkarte"
+        setSelectedValue={setSelectedValue}
+        flexDirection="row"
       />
+      <label className="self-center my-10 block text-gray-500 font-bold ">
+        <input
+          class="mr-2 leading-tight"
+          type="checkbox"
+          onChange={() => setChecked(!checked)}
+        />
+        <a class="text-sm text-blue-400" href="http://localhost:3000">
+          Kaufbedingungen aktzeptieren
+        </a>
+      </label>
+      <div className="w-80 self-center">
+        {checked && selectedValue ? (
+          <CustomButton
+            buttonText="Jetzt Zahlungspflichtig bestellen"
+            buttonFunction={buttonFunction}
+          />
+        ) : null}
+      </div>
     </div>
   );
 }

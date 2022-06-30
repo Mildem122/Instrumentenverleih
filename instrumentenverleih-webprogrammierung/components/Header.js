@@ -1,12 +1,10 @@
 import Image from "next/image";
 import HeaderItem from "./HeaderItem";
 import {
-  BadgeCheckIcon,
-  CollectionIcon,
   HomeIcon,
-  LightningBoltIcon,
-  SearchIcon,
   UserIcon,
+  LogoutIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/outline";
 import { useSession } from "next-auth/react";
 import GoogleProfile from "./GoogleProfile";
@@ -16,10 +14,11 @@ function Header() {
     <header className="flex flex-col sm:flex-row m-5 justify-between items-center h-auto">
       <div className="flex flex-grow justify-evenly max-w-2xl">
         <HeaderItem title="HOME" Icon={HomeIcon} url="/" />
-        <HeaderItem title="TRENDING" Icon={LightningBoltIcon} />
-        <HeaderItem title="VERIFIED" Icon={BadgeCheckIcon} />
-        <HeaderItem title="COLLECTIONS" Icon={CollectionIcon} />
-        <HeaderItem title="SEARCH" Icon={SearchIcon} />
+        <HeaderItem
+          title="SELBSTTEST"
+          Icon={QuestionMarkCircleIcon}
+          url="/instrument/test"
+        />
         {session?.user?.image ? (
           <GoogleProfile
             title="ACCOUNT"
@@ -29,11 +28,18 @@ function Header() {
         ) : (
           <HeaderItem title="ACCOUNT" Icon={UserIcon} url="/api/auth/signin" />
         )}
+        {session?.user?.image ? (
+          <HeaderItem
+            title="AUSLOGGEN"
+            Icon={LogoutIcon}
+            url="/api/auth/signout"
+          />
+        ) : null}
       </div>
       <Image
-        className="object-contain"
-        src="https://links.papareact.com/ua6"
-        width={200}
+        className="object-contain "
+        src="/../public/cooltext414321996166360.png"
+        width={256}
         height={100}
       />
     </header>

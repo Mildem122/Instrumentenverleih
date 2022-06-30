@@ -10,7 +10,7 @@ function CustomButton({ buttonText, buttonFunction }) {
         return;
       }}
     >
-      <span className="text-lg text-black group-hover:font-medium">
+      <span className="text-lg p-3 text-black group-hover:font-medium">
         {buttonText}
       </span>
     </button>

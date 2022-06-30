@@ -16,7 +16,7 @@ function NewUser() {
     const userData = await fetch(
       `http://localhost:3000/api/user/${session.user.id}`
     ).then((res) => res.json());
-    userData.adress = `${street} ${number}, ${city} (${plz})`;
+    userData.adress = `${street} ${number}, ${plz} ${city}`;
     //update User
     const updatedUser = await fetch(
       `http://localhost:3000/api/user/${userData.id}`,
@@ -120,7 +120,7 @@ function NewUser() {
                 onChange={() => setChecked(!checked)}
               />
               <a class="text-sm text-blue-400" href="http://localhost:3000">
-                Nuzungsbedingungen aktzeptieren
+                Datenschutz & AGB's aktzeptieren
               </a>
             </label>
           </div>

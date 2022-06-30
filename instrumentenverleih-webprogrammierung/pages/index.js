@@ -8,7 +8,7 @@ export default function Home({ results }) {
   return (
     <div>
       <Head>
-        <title>Instrumentenverleih</title>
+        <title>Instrumental</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Header />
@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   const playingTechnique = context.query.playingTechnique;
 
   const request = await fetch(
-    requests[playingTechnique]?.url || requests.fetchBellowInstruments.url
+    requests[playingTechnique]?.url || requests.fetchStringInstruments.url
   ).then((res) => res.json());
 
   return {

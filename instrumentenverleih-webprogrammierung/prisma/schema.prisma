@@ -1,11 +1,15 @@
 // schema.prisma
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_HEROKU")
 }
 
 generator client {
   provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
 }
 
 model Instrument {
@@ -19,7 +23,7 @@ model Instrument {
 }
 
 model Device {
-  id               String     @id @default(cuid())
+  id               String        @id @default(cuid())
   pictureUrl       String
   description      String
   modelName        String
@@ -27,10 +31,13 @@ model Device {
   price            String
   size             String?
   fingering        String?
-  isAvailable      Boolean    @default(false)
-  instrumentType   Instrument @relation(fields: [instrumentId], references: [id])
+  isAvailable      Boolean       @default(false)
+  instrumentType   Instrument    @relation(fields: [instrumentId], references: [id])
   availableDevices Int?
   Orders           Order[]
+  manufacturer     Manufacturer? @relation(fields: [manufacturerId], references: [id])
+  manufacturerId   String?
+  tone             String?
 }
 
 model PlayingTechnique {
@@ -40,9 +47,10 @@ model PlayingTechnique {
 }
 
 model Manufacturer {
-  id      String @id @default(cuid())
+  id      String   @id @default(cuid())
   name    String
   country String
+  Device  Device[]
 }
 
 model Order {
@@ -52,6 +60,8 @@ model Order {
   borrowedFrom  String
   borrowedUntil String
   orderDate     DateTime @default(now())
+  price         String?
+  paymentMethod String?
 
   orderId String @id
   userId  String

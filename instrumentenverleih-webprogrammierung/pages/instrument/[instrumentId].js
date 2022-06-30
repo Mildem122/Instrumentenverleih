@@ -16,10 +16,10 @@ export async function getServerSideProps(context) {
   const devices = await fetch(
     `http://localhost:3000/api/device/withinstrumentid/${instrumentId}`
   ).then((res) => res.json());
-
+  const sortedDevices = devices.sort((a, b) => a.price - b.price);
   return {
     props: {
-      devices: devices,
+      devices: sortedDevices,
     },
   };
 }
