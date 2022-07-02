@@ -26,6 +26,7 @@ https://www.prisma.io/
 
 Datenbank PostgreSQL
 https://www.postgresql.org/
+https://www.heroku.com/
 
 TailwindCSS
 https://tailwindcss.com/docs/guides/nextjs
@@ -34,5 +35,6 @@ Icons
 https://heroicons.com/
 
 NextAuth
+https://next-auth.js.org/
 
 
