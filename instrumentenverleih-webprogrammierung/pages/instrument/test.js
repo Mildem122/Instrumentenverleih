@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import Question from "../../components/Question";
 import CustomButton from "../../components/CustomButton";
 import TestResult from "../../components/TestResult";
+import Footer from "../../components/Footer";
 const answersQuestionOne = [
   { text: "Gitarre! DAS Rockinstrument überhaupt!", value: "B" },
   {
@@ -335,6 +336,7 @@ function test() {
         ) : null}
       </div>
       {question === 13 ? <TestResult selectedAnswers={allAnswers} /> : null}
+      <Footer />
     </div>
   );
 }

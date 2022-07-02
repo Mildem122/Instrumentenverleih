@@ -1,10 +1,12 @@
 import Header from "../../components/Header";
 import DevicePage from "../../components/DevicePage";
+import Footer from "../../components/Footer";
 function Instrument({ devices }) {
   return (
     <div>
       <Header />
       <DevicePage devices={devices} />
+      <Footer />
     </div>
   );
 }

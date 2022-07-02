@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import OrderPage from "../../components/OrderPage";
 function Order({ device }) {
@@ -5,6 +6,7 @@ function Order({ device }) {
     <div>
       <Header />
       <OrderPage device={device} />
+      <Footer />
     </div>
   );
 }

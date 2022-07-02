@@ -3,6 +3,7 @@ import CustomButton from "../../components/CustomButton";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Footer from "../../components/Footer";
 
 function NewUser() {
   const { data: session } = useSession();
@@ -165,6 +166,7 @@ function NewUser() {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

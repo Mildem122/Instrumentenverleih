@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { PencilIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Footer from "../../components/Footer";
 
 function NewUser() {
   const { data: session, status } = useSession();
@@ -137,6 +138,7 @@ function NewUser() {
           })}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
